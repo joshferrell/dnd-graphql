@@ -3,7 +3,7 @@ import DotEnv from 'dotenv-safe';
 import { apolloHapi, graphiqlHapi } from 'apollo-server';
 
 import createLogger from './logger';
-import graphSchema from './graphql';
+import schema from './schema/index';
 
 DotEnv.load();
 
@@ -15,7 +15,7 @@ const graphServer = {
         path: '/graphql',
         apolloOptions: () => ({
             pretty: true,
-            schema: graphSchema
+            schema
         })
     }
 };
