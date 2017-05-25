@@ -1,5 +1,5 @@
 import * as graphql from 'graphql';
-import { getInputFields, getOutputFields } from '../../utils/index';
+import { getOutputFields } from '../../utils/index';
 
 const fields = [
     {
