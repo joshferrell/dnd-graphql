@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-export const fetchAbilityScore = id =>
+const fetchAbilityScore = id =>
     new Promise(async (resolve, reject) => {
         const url = `http://www.dnd5eapi.co/api/ability-scores/${id}`;
 
