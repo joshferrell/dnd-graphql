@@ -1,5 +1,5 @@
 import { GraphQLNonNull, GraphQLID } from 'graphql';
-import fetch from 'node-fetch';
+import { fetchSpell } from '../actions/index';
 import { SpellType } from '../types/index';
 
 const SpellResolver = {
@@ -12,29 +12,7 @@ const SpellResolver = {
                 description: 'Get spell information from the spell id'
             }
         },
-        resolve: ((_, { id }) => new Promise(async (resolve, reject) => {
-            const url = `http://www.dnd5eapi.co/api/spells/${id}`;
-
-            try {
-                const res = await fetch(url);
-
-                if (res.status !== 200) {
-                    throw new Error('Response from server not successful');
-                }
-
-                const body = await res.json();
-
-                resolve(Object.assign({}, body, {
-                    concentration: body.concentration !== 'No',
-                    ritual: body.ritual !== 'No',
-                    description: body.desc,
-                    higherLevel: body.higher_level,
-                    castingTime: body.casting_time
-                }));
-            } catch (e) {
-                reject('Unable to access dnd api');
-            }
-        }))
+        resolve: ((_, { id }) => fetchSpell(id))
     }
 };
 

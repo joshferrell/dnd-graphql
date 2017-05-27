@@ -1,33 +1,16 @@
 import Hapi from 'hapi';
 import DotEnv from 'dotenv-safe';
-import { apolloHapi, graphiqlHapi } from 'apollo-server';
 
+import { goodLogger, createGraphServer, registerGraphiql } from './plugins';
 import createLogger from './logger';
 import schema from './schema/index';
 
 DotEnv.load();
 
 const logger = createLogger(process.env.SERVER_NAME);
-
-const graphServer = {
-    register: apolloHapi,
-    options: {
-        path: '/graphql',
-        apolloOptions: () => ({
-            pretty: true,
-            schema
-        })
-    }
-};
-const graphiqlRegister = {
-    register: graphiqlHapi,
-    options: {
-        path: '/graphiql',
-        graphiqlOptions: {
-            endpointURL: '/graphql'
-        }
-    }
-};
+const graphServer = createGraphServer(schema, '/graphql');
+const graphiql = registerGraphiql('/graphiql', '/graphql');
+const good = goodLogger(logger);
 
 const startServer = () => {
     const server = new Hapi.Server();
@@ -35,7 +18,7 @@ const startServer = () => {
         port: process.env.SERVER_PORT,
         routes: { cors: true }
     });
-    server.register([graphiqlRegister, graphServer], () => {
+    server.register([graphiql, graphServer, good], () => {
         server.route({
             method: 'GET',
             path: '/',
