@@ -19,7 +19,7 @@ const LanguageType = new graphql.GraphQLObjectType({
         typicalSpeakers: {
             type: graphql.GraphQLString,
             description: 'Races that tend to speak this language',
-            resolve: () => 'TODO: Implement race type'
+            resolve: () => 'TODO: Implement race type (need string lookup)'
         },
         script: {
             type: graphql.GraphQLString,
@@ -27,3 +27,5 @@ const LanguageType = new graphql.GraphQLObjectType({
         }
     })
 });
+
+export default LanguageType;
