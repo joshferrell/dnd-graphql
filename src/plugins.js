@@ -5,7 +5,7 @@ export const goodLogger = logger => ({
     register: good,
     options: {
         ops: {
-            interval: 2000
+            interval: process.env.SERVER_HEALTH_INTERVAL
         },
         includes: {
             request: ['headers', 'payload'],

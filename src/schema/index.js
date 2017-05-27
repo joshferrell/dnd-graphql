@@ -1,5 +1,10 @@
 import { GraphQLObjectType, GraphQLSchema } from 'graphql';
-import { SpellResolver, SkillResolver, AbilityScoreResolver } from './resolvers/index';
+import {
+    SpellResolver,
+    SkillResolver,
+    AbilityScoreResolver,
+    ProficiencyResolver
+} from './resolvers/index';
 
 const query = new GraphQLObjectType({
     name: 'QueryType',
@@ -7,7 +12,8 @@ const query = new GraphQLObjectType({
     fields: {
         ...SpellResolver,
         ...SkillResolver,
-        ...AbilityScoreResolver
+        ...AbilityScoreResolver,
+        ...ProficiencyResolver
     }
 });
 
