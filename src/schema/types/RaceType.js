@@ -1,6 +1,6 @@
 import * as graphql from 'graphql';
-import { LanguageType, AbilityBonusType, TraitType } from './index';
-import { fetchLanguage, fetchTrait } from '../actions/index';
+import { LanguageType, AbilityBonusType, TraitType, SubRaceType } from './index';
+import { fetchLanguage, fetchTrait, fetchSubRace } from '../actions/index';
 
 const RaceType = new graphql.GraphQLObjectType({
     name: 'Race',
@@ -81,9 +81,14 @@ const RaceType = new graphql.GraphQLObjectType({
             )
         },
         subraces: {
-            type: graphql.GraphQLString,
+            type: new graphql.GraphQLList(TraitType),
             description: 'The reference object for the class\'s spellcasting. Contains information such as spells known, spellcasting ability, and cantrips knowns',
-            resolve: () => 'TODO: need to implement subraces'
+            resolve: (({ subraces }) =>
+                Promise.all(subraces.map(({ url }) => {
+                    const id = url.split('/').pop();
+                    return fetchSubRace(id);
+                }))
+            )
         }
     })
 });

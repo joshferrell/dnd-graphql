@@ -6,3 +6,4 @@ export { default as LanguageType } from './LanguageType';
 export { default as RaceType } from './RaceType';
 export { default as AbilityBonusType } from './AbilityBonusType';
 export { default as TraitType } from './TraitType';
+export { default as SubRaceType } from './SubRaceType';

@@ -7,6 +7,7 @@ export {
 export { default as fetchProficiency } from './fetchProficiency';
 export { default as fetchLanguage } from './fetchLanguage';
 export { default as fetchTrait } from './fetchTrait';
+export { default as fetchSubRace } from './fetchSubRace';
 export {
     fetchRace,
     searchRace

@@ -5,3 +5,4 @@ export { default as ProficiencyResolver } from './ProficiencyResolver';
 export { default as LanguageResolver } from './LanguageResolver';
 export { default as RaceResolver } from './RaceResolver';
 export { default as TraitResolver } from './TraitResolver';
+export { default as SubRaceResolver } from './SubRaceResolver';
