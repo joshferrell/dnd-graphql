@@ -1,5 +1,5 @@
 import * as graphql from 'graphql';
-import { LanguageType } from './index';
+import { LanguageType, AbilityBonusType } from './index';
 import { fetchLanguage } from '../actions/index';
 
 const RaceType = new graphql.GraphQLObjectType({
@@ -19,8 +19,14 @@ const RaceType = new graphql.GraphQLObjectType({
             description: 'Base move speed for this race (in feet per round)'
         },
         abilityBonuses: {
-            type: graphql.GraphQLString,
-            description: 'TODO: Implement this'
+            type: new graphql.GraphQLList(AbilityBonusType),
+            description: 'Starting ability score bonuses available to the race',
+            resolve: (({ abilityBonuses }) =>
+                Promise.all(abilityBonuses.map((points, index) => ({
+                    points,
+                    id: index + 1
+                })))
+            )
         },
         alignment: {
             type: graphql.GraphQLString,

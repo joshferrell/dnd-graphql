@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-const fetchAbilityScore = id =>
+export const fetchAbilityScore = id =>
     new Promise(async (resolve, reject) => {
         const url = `http://www.dnd5eapi.co/api/ability-scores/${id}`;
 
@@ -23,4 +23,27 @@ const fetchAbilityScore = id =>
         }
     });
 
-export default fetchAbilityScore;
+export const searchAbilityScore = string =>
+    new Promise(async (resolve, reject) => {
+        const apiUrl = 'http://www.dnd5eapi.co/api/ability-scores';
+
+        try {
+            const res = await fetch(apiUrl);
+
+            if (res.status !== 200) {
+                throw new Error('Response from server not successful');
+            }
+
+            const body = await res.json();
+
+            const id = body.results
+                .filter(({ name }) => name === string)
+                .map(({ url }) => url.split('/').pop());
+
+            const abilityScore = await fetchAbilityScore(id[0]);
+
+            resolve(abilityScore);
+        } catch (e) {
+            reject('Unable to access dnd api');
+        }
+    });
