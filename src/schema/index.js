@@ -5,7 +5,8 @@ import {
     AbilityScoreResolver,
     ProficiencyResolver,
     RaceResolver,
-    LanguageResolver
+    LanguageResolver,
+    TraitResolver
 } from './resolvers/index';
 
 const query = new GraphQLObjectType({
@@ -17,7 +18,8 @@ const query = new GraphQLObjectType({
         ...AbilityScoreResolver,
         ...ProficiencyResolver,
         ...RaceResolver,
-        ...LanguageResolver
+        ...LanguageResolver,
+        ...TraitResolver
     }
 });
 
