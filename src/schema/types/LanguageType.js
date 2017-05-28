@@ -1,4 +1,6 @@
 import * as graphql from 'graphql';
+import { searchRace } from '../actions/index';
+import { RaceType } from './index';
 
 const LanguageType = new graphql.GraphQLObjectType({
     name: 'LanguageType',
@@ -17,9 +19,11 @@ const LanguageType = new graphql.GraphQLObjectType({
             description: 'Whether the language is standard or exotic'
         },
         typicalSpeakers: {
-            type: graphql.GraphQLString,
+            type: new graphql.GraphQLList(RaceType),
             description: 'Races that tend to speak this language',
-            resolve: () => 'TODO: Implement race type'
+            resolve: (({ typicalSpeakers }) => Promise.all(
+                typicalSpeakers.map(speaker => searchRace(speaker))
+            ))
         },
         script: {
             type: graphql.GraphQLString,
@@ -27,3 +31,5 @@ const LanguageType = new graphql.GraphQLObjectType({
         }
     })
 });
+
+export default LanguageType;

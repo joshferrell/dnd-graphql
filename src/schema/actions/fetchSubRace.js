@@ -1,8 +1,8 @@
 import fetch from 'node-fetch';
 
-const fetchLanguage = id =>
+const fetchSubRace = id =>
     new Promise(async (resolve, reject) => {
-        const url = `http://www.dnd5eapi.co/api/languages/${id}`;
+        const url = `http://www.dnd5eapi.co/api/subraces/${id}`;
 
         try {
             const res = await fetch(url);
@@ -15,11 +15,13 @@ const fetchLanguage = id =>
 
             resolve(Object.assign({}, body, {
                 id: body.index,
-                typicalSpeakers: body.typical_speakers
+                abilityBonuses: body.ability_bonuses,
+                description: body.desc,
+                startingProficiencies: body.starting_proficiencies
             }));
         } catch (e) {
             reject('Unable to access dnd api');
         }
     });
 
-export default fetchLanguage;
+export default fetchSubRace;

@@ -25,10 +25,12 @@ const AbilityScoreType = new graphql.GraphQLObjectType({
         skills: {
             type: new graphql.GraphQLList(SkillType),
             description: 'A list of skills that uses this ability score',
-            resolve: (({ skills }) => Promise.all(skills.map(({ url }) => {
-                const id = url.split('/').pop();
-                return fetchSkill(id);
-            })))
+            resolve: (({ skills }) =>
+                Promise.all(skills.map(({ url }) => {
+                    const id = url.split('/').pop();
+                    return fetchSkill(id);
+                }))
+            )
         }
     })
 });
