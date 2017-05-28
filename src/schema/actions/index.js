@@ -6,4 +6,7 @@ export {
 } from './fetchAbilityScore';
 export { default as fetchProficiency } from './fetchProficiency';
 export { default as fetchLanguage } from './fetchLanguage';
-export { default as fetchRace } from './fetchRace';
+export {
+    fetchRace,
+    searchRace
+} from './fetchRace';

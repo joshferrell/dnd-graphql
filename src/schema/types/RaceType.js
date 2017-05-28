@@ -40,9 +40,9 @@ const RaceType = new graphql.GraphQLObjectType({
             type: new graphql.GraphQLEnumType({
                 name: 'sizes',
                 values: {
-                    large: {},
-                    medium: {},
-                    small: {}
+                    Large: {},
+                    Medium: {},
+                    Small: {}
                 }
             }),
             description: 'Size class of this race'

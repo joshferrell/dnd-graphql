@@ -14,7 +14,8 @@ const fetchLanguage = id =>
             const body = await res.json();
 
             resolve(Object.assign({}, body, {
-                id: body.index
+                id: body.index,
+                typicalSpeakers: body.typical_speakers
             }));
         } catch (e) {
             reject('Unable to access dnd api');

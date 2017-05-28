@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-const fetchRace = id =>
+export const fetchRace = id =>
     new Promise(async (resolve, reject) => {
         const url = `http://www.dnd5eapi.co/api/races/${id}`;
 
@@ -25,4 +25,26 @@ const fetchRace = id =>
         }
     });
 
-export default fetchRace;
+export const searchRace = string =>
+    new Promise(async (resolve, reject) => {
+        const apiUrl = 'http://www.dnd5eapi.co/api/races';
+        try {
+            const res = await fetch(apiUrl);
+
+            if (res.status !== 200) {
+                throw new Error('Response from server not successful');
+            }
+
+            const body = await res.json();
+
+            const id = body.results
+                .filter(({ name }) => string.includes(name))
+                .map(({ url }) => url.split('/').pop());
+
+            const race = await fetchRace(id[0]);
+
+            resolve(race);
+        } catch (e) {
+            reject('Unable to access dnd api');
+        }
+    });
