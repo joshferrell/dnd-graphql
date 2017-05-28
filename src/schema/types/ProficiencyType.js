@@ -1,4 +1,6 @@
 import * as graphql from 'graphql';
+import { fetchRace } from '../actions/index';
+import { RaceType } from './index';
 
 const ProficiencyType = new graphql.GraphQLObjectType({
     name: 'Proficiency',
@@ -22,9 +24,14 @@ const ProficiencyType = new graphql.GraphQLObjectType({
             resolve: () => 'TODO: Not yet implemented'
         },
         races: {
-            type: graphql.GraphQLString,
+            type: new graphql.GraphQLList(RaceType),
             description: 'Races that start with this proficiency',
-            resolve: () => 'TODO: Not yet implemented'
+            resolve: (({ races }) =>
+                Promise.all(races.map(({ url }) => {
+                    const id = url.split('/').pop();
+                    return fetchRace(id);
+                }))
+            )
         }
     })
 });
