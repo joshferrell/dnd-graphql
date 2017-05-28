@@ -1,6 +1,6 @@
 import * as graphql from 'graphql';
-import { LanguageType, AbilityBonusType } from './index';
-import { fetchLanguage } from '../actions/index';
+import { LanguageType, AbilityBonusType, TraitType } from './index';
+import { fetchLanguage, fetchTrait } from '../actions/index';
 
 const RaceType = new graphql.GraphQLObjectType({
     name: 'Race',
@@ -71,9 +71,14 @@ const RaceType = new graphql.GraphQLObjectType({
             description: 'Flavor description of the languages this race knows'
         },
         traits: {
-            type: graphql.GraphQLString,
+            type: new graphql.GraphQLList(TraitType),
             description: 'Racial traits that provide benefits to its members',
-            resolve: () => 'TODO: NEed to implement traits'
+            resolve: (({ traits }) =>
+                Promise.all(traits.map(({ url }) => {
+                    const id = url.split('/').pop();
+                    return fetchTrait(id);
+                }))
+            )
         },
         subraces: {
             type: graphql.GraphQLString,
